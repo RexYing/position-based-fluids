@@ -1,0 +1,84 @@
+
+<scene version="0.5.0">
+    <integrator type="path">
+        <integer name="maxDepth" value="10"/>
+    </integrator>
+
+    <!--Simple Diffuse Material-->
+    <bsdf type="diffuse" id="water">
+        <spectrum name="reflectance" value="0.1 0.1 0.5"/>
+    </bsdf>
+
+    <!--Realistic Water Material.
+      This will take some fiddling to look good. It will need more samples,
+      and probably better lighting.-->
+    <!--<bsdf type="dielectric" id="water">-->
+        <!--<string name="intIOR" value="water"/>-->
+        <!--<string name="extIOR" value="air"/>-->
+    <!--</bsdf>-->
+
+    <include filename="$pFile"/>
+
+    <shape type="cube">
+        <transform name="toWorld">
+            <scale value="10"/>
+        </transform>
+
+        <boolean name="flipNormals" value="true"/>
+
+        <bsdf type="twosided">
+            <bsdf type="diffuse">
+                <texture type="checkerboard" name="reflectance">
+                    <float name="uvscale" value="10"/>
+                </texture>
+            </bsdf>
+        </bsdf>
+    </shape>
+
+    <emitter type="spot">
+        <transform name="toWorld">
+            <lookat origin="2 2 2" target="0 0 0"/>
+        </transform>
+
+        <float name="cutoffAngle" value="40"/>
+        <spectrum name="intensity" value="10"/>
+    </emitter>
+
+    <emitter type="spot">
+        <transform name="toWorld">
+            <lookat origin="0 2 2" target="0 0 0"/>
+        </transform>
+
+        <float name="cutoffAngle" value="40"/>
+        <spectrum name="intensity" value="10"/>
+    </emitter>
+
+    <emitter type="point">
+        <point name="position" x="-5" y="1" z="-5"/>
+        <spectrum name="intensity" value="150"/>
+    </emitter>
+
+    <sensor type="perspective">
+        <transform name="toWorld">
+
+            <lookat origin="4 1 4"
+                    target="0 0.5 0"
+                    up="0, 1, 0"/>
+        </transform>
+        <float name="fov" value="30.000000"/>
+        <string name="fovAxis" value="x"/>
+
+        <film type="ldrfilm">
+            <integer name="width" value="640"/>
+            <integer name="height" value="480"/>
+            <string name="fileFormat" value="png"/>
+            <string name="pixelFormat" value="rgba"/>
+            <boolean name="banner" value="false"/>
+        </film>
+
+        <sampler type="halton">
+            <integer name="sampleCount" value="32"/>
+        </sampler>
+
+    </sensor>
+</scene>
