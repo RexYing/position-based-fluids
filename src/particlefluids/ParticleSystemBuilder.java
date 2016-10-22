@@ -14,6 +14,8 @@ import com.jogamp.opengl.glu.*;
 
 import com.jogamp.opengl.util.*;
 
+import forces.ViscosityXSPH;
+
 /**
  * CS348C: Assignment #1: "Position Based Fluids"
  *
@@ -28,7 +30,7 @@ import com.jogamp.opengl.util.*;
 public class ParticleSystemBuilder implements GLEventListener {
 	private FrameExporter frameExporter;
 
-	private static int N_STEPS_PER_FRAME = 500;
+	private static int N_STEPS_PER_FRAME = 50;
 
 	private GLU glu;
 
@@ -64,6 +66,8 @@ public class ParticleSystemBuilder implements GLEventListener {
 		PS = new ParticleSystem(boundary);
 		// add meshes for the PS
 		PS.addMesh(Mesh.CubeMesh(new Point3d(0, 0, 0), new Point3d(1, 1, 1)));
+		
+		PS.addForce(new ViscosityXSPH(PS));
 	}
 
 	/**

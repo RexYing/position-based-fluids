@@ -17,7 +17,7 @@ public class Particle
 	public static final float[] BLUE = {0f, 0f, 1f, 1f};
 	
     /** Radius of particle's sphere graphic. */
-    public static final double PARTICLE_RADIUS = 0.015;
+    public static final double PARTICLE_RADIUS = 0.010;
 
     /** Display list index. */
     private static int PARTICLE_DISPLAY_LIST = -1;
@@ -35,7 +35,7 @@ public class Particle
     Point3d  x0 = new Point3d();
 
     /** Velocity. */
-    Vector3d v = new Vector3d();
+    public final Vector3d v = new Vector3d();
 
     /** Force accumulator. */
     Vector3d f = new Vector3d();

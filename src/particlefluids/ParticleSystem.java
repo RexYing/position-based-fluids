@@ -5,6 +5,7 @@ import javax.vecmath.*;
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.util.glsl.*;
 
+import forces.Force;
 import particlefluids.neighbors.CubeSpaceDivision;
 import particlefluids.neighbors.Neighbors;
 
@@ -155,9 +156,9 @@ public class ParticleSystem // implements Serializable
 		for (Particle p : P) {
 			/// Gather forces: (TODO)
 			clearForceExceptG(p);
-			for (Force force : F) {
-				force.applyForce();
-			}
+		}
+		for (Force force : F) {
+			force.applyForce();
 		}
 
 		/// TIME-STEP: (Symplectic Euler for now):
@@ -170,7 +171,6 @@ public class ParticleSystem // implements Serializable
 			meshCollisionDetection(pPrev, p.x, p);
 			cubeDivision.updateParticle(pPrev, p);
 		}
-		
 
 		time += dt;
 	}
@@ -183,6 +183,10 @@ public class ParticleSystem // implements Serializable
 				particle.x.scaleAdd(collision.dist - Constants.WALL_MARGIN, collision.direction, pPrev);
 			}
 		}
+	}
+	
+	public Neighbors findNeighbors(Particle particle, double radius) {
+		return cubeDivision.findNeighbors(particle, radius);
 	}
 	
 	/**
@@ -203,5 +207,13 @@ public class ParticleSystem // implements Serializable
 		}
 
 		prog.useProgram(gl, false);
+	}
+	
+	public List<Particle> getParticles() {
+		return P;
+	}
+	
+	public Particle getParticle(int index) {
+		return P.get(index);
 	}
 }

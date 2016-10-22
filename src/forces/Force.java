@@ -1,6 +1,8 @@
-package particlefluids;
+package forces;
 
 import com.jogamp.opengl.*;
+
+import particlefluids.ParticleSystem;
 
 /**
  * Particle system force.
