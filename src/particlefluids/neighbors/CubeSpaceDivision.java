@@ -47,12 +47,15 @@ public class CubeSpaceDivision {
 		cellTable.get(key).add(p);
 	}
 	
+	/**
+	 * Remove the particle from prevPos, and add the particle to a cube according to its current pos.
+	 */
 	public void updateParticle(Point3d prevPos, Particle p) {
 		Tuple3i prevKey = computeKey(prevPos);
 		if (cellTable.containsKey(prevKey)) {
 			boolean result = cellTable.get(prevKey).remove(p);
 			if (!result) {
-				System.err.println("NOT HERE!!!");
+				System.err.println("CubeSpaceDivision: particle NOT in cube!!!");
 			}
 		}
 		addParticle(p);

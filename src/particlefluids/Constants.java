@@ -19,4 +19,14 @@ public interface Constants
     public static final double WALL_DAMP = 0.8;
     
     public static final double KERNEL_RADIUS = 0.1;
+    
+    //public static final double REST_DENSITY = 6378; // kg m^-2
+    public static final double REST_DENSITY = 155378; 
+    /** Constraint Force Mixing */
+    public static final double CFM_EPSILON = 5000;
+    
+    /** Tensile stability */
+    public static final double ARTIFICIAL_PRESSURE_STRENGTH = 0.0001;
+    public static final double ARTIFICIAL_PRESSURE_RADIUS = 0.03; // meter
+    public static final double ARTIFICIAL_PRESSURE_POWER = 4;
 }

@@ -2,10 +2,12 @@ package particlefluids;
 
 import java.util.*;
 import javax.vecmath.*;
+
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.util.glsl.*;
 
 import forces.Force;
+import forces.Kernels;
 import particlefluids.neighbors.CubeSpaceDivision;
 import particlefluids.neighbors.Neighbors;
 
@@ -29,6 +31,8 @@ public class ParticleSystem // implements Serializable
 
 	/** List of Force objects. */
 	public ArrayList<Force> F = new ArrayList<Force>();
+	
+	private List<Neighbors> neighbors = new ArrayList<>();
 
 	/**
 	 * true iff prog has been initialized. This cannot be done in the constructor
@@ -103,7 +107,7 @@ public class ParticleSystem // implements Serializable
 	 * @return Reference to new Particle.
 	 */
 	public synchronized Particle createParticle(Point3d p0) {
-		Particle newP = new Particle(p0);
+		Particle newP = new Particle(p0, P.size());
 		P.add(newP);
 		cubeDivision.addParticle(newP);
 		return newP;
@@ -152,11 +156,18 @@ public class ParticleSystem // implements Serializable
 	 * "Position Based Fluids" integrator here
 	 */
 	public synchronized void advanceTime(double dt) {
-		/// Clear force accumulators:
+//		long prev = System.currentTimeMillis();
+//		for (Particle p : P) {
+//			neighbors.add(cubeDivision.findNeighbors(p, Kernels.RADIUS));
+//		}
+//		long t1 = System.currentTimeMillis();
+//		System.out.println(t1 - prev);
+		// Clear force accumulators:
 		for (Particle p : P) {
-			/// Gather forces: (TODO)
+			
 			clearForceExceptG(p);
 		}
+		// Gather forces
 		for (Force force : F) {
 			force.applyForce();
 		}
@@ -170,23 +181,39 @@ public class ParticleSystem // implements Serializable
 			
 			meshCollisionDetection(pPrev, p.x, p);
 			cubeDivision.updateParticle(pPrev, p);
+			if (p.x.x < 0) {
+				System.err.println("--   " + pPrev + "  ---->   " + p.x);
+			}
 		}
-
 		time += dt;
 	}
 
-	private synchronized void meshCollisionDetection(Point3d pPrev, Point3d p, Particle particle) {
+	private synchronized void meshCollisionDetection(Point3d pPrev, Point3d pCurr, Particle particle) {
 		for (Mesh mesh : meshes) {
-			Collision collision = mesh.segmentIntersects(pPrev, p);
-			if (collision != null) {
+			Collision collision = mesh.segmentIntersects(pPrev, pCurr);
+			boolean b = false;
+			while (collision != null) {
+				if (b) {
+					System.out.println(pPrev + ",   " + particle.x);
+				}
+				b = true;
 				particle.v.scale(particle.v.length() * Constants.WALL_DAMP, collision.reflectedDirection);
-				particle.x.scaleAdd(collision.dist - Constants.WALL_MARGIN, collision.direction, pPrev);
+				Vector3d dir = new Vector3d(collision.direction);
+				//particle.x.scaleAdd(Math.max(0, collision.dist - Constants.WALL_MARGIN), dir, pPrev);
+				particle.x.scaleAdd(0, dir, pPrev);
+				System.out.println(particle.x +  ",    " + pPrev);
+				collision = mesh.segmentIntersects(pPrev, particle.x);
 			}
 		}
 	}
 	
-	public Neighbors findNeighbors(Particle particle, double radius) {
-		return cubeDivision.findNeighbors(particle, radius);
+	public Neighbors findNeighbors(int index, double radius) {
+		//if (radius == Kernels.RADIUS) {
+		if (false) {
+			return neighbors.get(index);
+		} else {
+			return cubeDivision.findNeighbors(P.get(index), radius);
+		}
 	}
 	
 	/**
@@ -215,5 +242,21 @@ public class ParticleSystem // implements Serializable
 	
 	public Particle getParticle(int index) {
 		return P.get(index);
+	}
+	
+	/**
+	 * Apply changes to velocity/position of all particles in this particle system. 
+	 */
+	public synchronized void applyChanges() {
+		for (Particle p : P) {
+			Point3d prevPos = new Point3d(p.x);
+			p.applyChanges();
+			meshCollisionDetection(prevPos, p.x, p);
+			cubeDivision.updateParticle(prevPos, p);
+			
+			if (p.x.x < 0) {
+				System.err.println(prevPos + "  ---->   " + p.x);
+			}
+		}
 	}
 }

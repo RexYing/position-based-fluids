@@ -25,8 +25,9 @@ public class ViscosityXSPH implements Force {
 	@Override
 	public void applyForce() {
 		List<Vector3d> dvList = new ArrayList<>();
-		for (Particle p : ps.getParticles()) {
-			Neighbors neighbors = ps.findNeighbors(p, Kernels.POLY6_RADIUS);
+		for (int j = 0; j < ps.getParticles().size(); j++) {
+			Particle p = ps.getParticle(j);
+			Neighbors neighbors = ps.findNeighbors(j, Kernels.RADIUS);
 			Vector3d dv = new Vector3d();
 			for (int i = 0; i < neighbors.dists.size(); i++) {
 				Vector3d vRel = new Vector3d(); 

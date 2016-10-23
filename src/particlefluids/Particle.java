@@ -24,12 +24,18 @@ public class Particle
 
     /** Highlighted appearance if true, otherwise white. */
     private boolean highlight = false;
+    
+    /** The index of this particle in its particle system. */
+    private final int index;
 
     /** Default mass. */
     double   m = Constants.PARTICLE_MASS;
 
     /** Deformed Position. */
     public final Point3d  x = new Point3d();
+    
+    /** Change in position to be applied */
+    private Vector3d dx = new Vector3d();
 
     /** Undeformed/material Position. */
     Point3d  x0 = new Point3d();
@@ -46,10 +52,16 @@ public class Particle
      * Constructs particle with the specified material/undeformed
      * coordinate, x0.
      */
-    public Particle(Point3d x0)
+    public Particle(Point3d x0, int index)
     {
         this.x0.set(x0);
         x.set(x0);
+        this.index = index;
+    }
+    
+    public Particle(Point3d x0)
+    {
+        this(x0, 0);
     }
 
     /** Draws spherical particle using a display list. */
@@ -98,5 +110,23 @@ public class Particle
     /** True if particle should be drawn highlighted. */
     public boolean getHighlight() {
         return highlight;
+    }
+    
+    public void changePos(Vector3d dx) {
+    	this.dx = dx;
+    }
+    
+    public void applyChanges() {
+    	x.add(dx);
+    	
+    	dx = new Vector3d();
+    }
+    
+    
+    /**
+     * @return the index of the particle in its particle system.
+     */
+    public int getIndex() {
+    	return index;
     }
 }

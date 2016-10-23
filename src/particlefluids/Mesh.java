@@ -15,6 +15,8 @@ import com.jogamp.newt.event.NEWTEventFiFo;
 import com.sun.j3d.utils.behaviors.picking.Intersect;
 import com.sun.j3d.utils.picking.PickIntersection;
 
+import pqp.PQP_Model;
+
 public class Mesh {
 	
 	private int nVertices;
@@ -22,7 +24,7 @@ public class Mesh {
 
 	private List<Point3d> vertices = new ArrayList<>();
 	private List<Tuple3i> faces = new ArrayList<>();
-	/** Unit Normal of each face in the direction */
+	/** Unit Normal of each face */
 	private List<Vector3d> normals = new ArrayList<>();
 	
 	//private float[] vFlatten;
@@ -70,7 +72,7 @@ public class Mesh {
 			tri[1] = vertices.get(face.y);
 			tri[2] = vertices.get(face.z);
 			double[] dist = new double[1];
-			dist[0] = Double.MAX_VALUE;
+			dist[0] = 0;
 			boolean intersect = Intersect.segmentAndTriangle(seg, tri, 0, dist);
 			if (intersect && minDist > dist[0]) {
 				minDist = dist[0];
@@ -108,4 +110,7 @@ public class Mesh {
 		
 		return new Mesh(verts, faces);
 	}
+	
 }
+
+

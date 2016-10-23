@@ -14,6 +14,7 @@ import com.jogamp.opengl.glu.*;
 
 import com.jogamp.opengl.util.*;
 
+import forces.Incompressibility;
 import forces.ViscosityXSPH;
 
 /**
@@ -30,12 +31,12 @@ import forces.ViscosityXSPH;
 public class ParticleSystemBuilder implements GLEventListener {
 	private FrameExporter frameExporter;
 
-	private static int N_STEPS_PER_FRAME = 50;
+	private static int N_STEPS_PER_FRAME = 10;
 
 	private GLU glu;
 
 	/** Default graphics time step size. */
-	public static final double DT = 0.01;
+	public static final double DT = 0.0083;
 
 	/** Main window frame. */
 	JFrame frame = null;
@@ -68,6 +69,12 @@ public class ParticleSystemBuilder implements GLEventListener {
 		PS.addMesh(Mesh.CubeMesh(new Point3d(0, 0, 0), new Point3d(1, 1, 1)));
 		
 		PS.addForce(new ViscosityXSPH(PS));
+		PS.addForce(new Incompressibility(
+				PS, 
+				Constants.REST_DENSITY, 
+				Constants.ARTIFICIAL_PRESSURE_STRENGTH,
+				Constants.ARTIFICIAL_PRESSURE_RADIUS,
+				Constants.ARTIFICIAL_PRESSURE_POWER));
 	}
 
 	/**
