@@ -16,6 +16,7 @@ import com.jogamp.opengl.util.*;
 
 import forces.Incompressibility;
 import forces.ViscosityXSPH;
+import pqp.PQP_Model;
 
 /**
  * CS348C: Assignment #1: "Position Based Fluids"
@@ -29,6 +30,14 @@ import forces.ViscosityXSPH;
  * @author Eston Schweickart, February 2014
  */
 public class ParticleSystemBuilder implements GLEventListener {
+	static {
+		/* Need the library (libPQP.so in Linux, PQP.dll in Windows) to be put into java library path.
+		 * In Linux, it is the LD_LIBRARY_PATH; in Windows, it is the PATH variable.
+		 * Check using:
+		 * System.getProperty("java.library.path");
+		 */
+		System.loadLibrary("PQP");
+	}
 	private FrameExporter frameExporter;
 
 	private static int N_STEPS_PER_FRAME = 10;
@@ -602,6 +611,7 @@ public class ParticleSystemBuilder implements GLEventListener {
 	 * ### Runs the ParticleSystemBuilder. ###
 	 */
 	public static void main(String[] args) {
+
 		try {
 			ParticleSystemBuilder psb = new ParticleSystemBuilder();
 			psb.start();

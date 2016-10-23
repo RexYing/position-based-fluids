@@ -5,7 +5,7 @@ JAVA_WIN_INCLUDE = "-I/cygdrive/c/Program Files/Java/jdk/include/win32"
 JAVA_WIN_BRIDGE_INCLUDE = "-I/cygdrive/c/Program Files/Java/jdk/include/win32/bridge"
 
 # need to include dir that contains jni.h and jni_md.h
-SWIG_JAVA_INCLUDE = $(JAVA_INCLUDE) $(JAVA_WIN_INCLUDE) $(JAVA_WIN_BRIDGE_INCLUDE)
+SWIG_JAVA_INCLUDE = $(JAVA_INCLUDE) $(JAVA_WIN_INCLUDE) 
 
 CFLAGS		= -O2 -I. -fno-strict-aliasing
 
