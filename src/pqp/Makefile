@@ -18,15 +18,16 @@ else
 endif
 
 
-CFLAGS		= -O2 -I. -fno-strict-aliasing -fPIC
+CFLAGS		= -O2 -I. -fno-strict-aliasing -fPIC -std=c++11
 WIN_LIB_FLAGS   = -Wl,--add-stdcall-alias # might need for linking dll
 
 .SUFFIXES: .C .cpp
 
-OBJECTS		= lib/PQP.o \
-		  lib/BV.o \
+OBJECTS		= lib/BV.o \
 		  lib/Build.o \
-		  lib/TriDist.o
+		  lib/TriDist.o \
+		  lib/WrapperUtil.o \
+		  lib/PQP.o 
 			
 WRAP_OBJ  = lib/swig_PQP_wrap.o
 
@@ -45,6 +46,8 @@ lib/Build.o: Build.cpp
 	$(CC) $(CFLAGS) -c Build.cpp -o lib/Build.o
 lib/TriDist.o: TriDist.cpp
 	$(CC) $(CFLAGS) -c TriDist.cpp -o lib/TriDist.o
+lib/WrapperUtil.o: WrapperUtil.cpp
+	$(CC) $(CFLAGS) -c WrapperUtil.cpp -o lib/WrapperUtil.o
 	
 java: $(OBJECTS)
 	swig -java -c++ -package pqp -outdir . -o swig_PQP_wrap.cpp swig_PQP.i

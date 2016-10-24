@@ -41,12 +41,8 @@ public class PQP implements PQPConstants {
     return PQPJNI.PQP_FIRST_CONTACT_get();
   }
 
-  public static int PQP_Collide(PQP_CollideResult result, SWIGTYPE_p_a_3__double R1, SWIGTYPE_p_double T1, PQP_Model o1, SWIGTYPE_p_a_3__double R2, SWIGTYPE_p_double T2, PQP_Model o2, int flag) {
-    return PQPJNI.PQP_Collide__SWIG_0(PQP_CollideResult.getCPtr(result), result, SWIGTYPE_p_a_3__double.getCPtr(R1), SWIGTYPE_p_double.getCPtr(T1), PQP_Model.getCPtr(o1), o1, SWIGTYPE_p_a_3__double.getCPtr(R2), SWIGTYPE_p_double.getCPtr(T2), PQP_Model.getCPtr(o2), o2, flag);
-  }
-
-  public static int PQP_Collide(PQP_CollideResult result, SWIGTYPE_p_a_3__double R1, SWIGTYPE_p_double T1, PQP_Model o1, SWIGTYPE_p_a_3__double R2, SWIGTYPE_p_double T2, PQP_Model o2) {
-    return PQPJNI.PQP_Collide__SWIG_1(PQP_CollideResult.getCPtr(result), result, SWIGTYPE_p_a_3__double.getCPtr(R1), SWIGTYPE_p_double.getCPtr(T1), PQP_Model.getCPtr(o1), o1, SWIGTYPE_p_a_3__double.getCPtr(R2), SWIGTYPE_p_double.getCPtr(T2), PQP_Model.getCPtr(o2), o2);
+  public static int PQP_Collide(PQP_CollideResult result, SWIGTYPE_p_p_double R1, SWIGTYPE_p_double T1, PQP_Model o1, SWIGTYPE_p_p_double R2, SWIGTYPE_p_double T2, PQP_Model o2, int flag) {
+    return PQPJNI.PQP_Collide(PQP_CollideResult.getCPtr(result), result, SWIGTYPE_p_p_double.getCPtr(R1), SWIGTYPE_p_double.getCPtr(T1), PQP_Model.getCPtr(o1), o1, SWIGTYPE_p_p_double.getCPtr(R2), SWIGTYPE_p_double.getCPtr(T2), PQP_Model.getCPtr(o2), o2, flag);
   }
 
   public static int build_model(PQP_Model m) {

@@ -13,6 +13,7 @@
 #include "RectDist.h"
 #include "Tri.h"
 #include "TriDist.h"
+#include "WrapperUtil.h"
 %}
 
 %include "PQP.h"
@@ -27,6 +28,8 @@
 %include "RectDist.h"
 %include "Tri.h"
 %include "TriDist.h"
-
+%include "WrapperUtil.h"
 %include "carrays.i"
+
 %array_class(PQP_REAL, DoubleArray);
+

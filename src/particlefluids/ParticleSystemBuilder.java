@@ -34,8 +34,9 @@ public class ParticleSystemBuilder implements GLEventListener {
 		/* Need the library (libPQP.so in Linux, PQP.dll in Windows) to be put into java library path.
 		 * In Linux, it is the LD_LIBRARY_PATH; in Windows, it is the PATH variable.
 		 * Check using:
-		 * System.getProperty("java.library.path");
+		 * 
 		 */
+		
 		System.loadLibrary("PQP");
 	}
 	private FrameExporter frameExporter;

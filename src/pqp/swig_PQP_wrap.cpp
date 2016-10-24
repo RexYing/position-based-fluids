@@ -240,6 +240,7 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 #include "RectDist.h"
 #include "Tri.h"
 #include "TriDist.h"
+#include "WrapperUtil.h"
 
 
 typedef PQP_REAL DoubleArray;
@@ -363,13 +364,13 @@ SWIGEXPORT jint JNICALL Java_pqp_PQPJNI_PQP_1FIRST_1CONTACT_1get(JNIEnv *jenv, j
 }
 
 
-SWIGEXPORT jint JNICALL Java_pqp_PQPJNI_PQP_1Collide_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jlong jarg3, jlong jarg4, jobject jarg4_, jlong jarg5, jlong jarg6, jlong jarg7, jobject jarg7_, jint jarg8) {
+SWIGEXPORT jint JNICALL Java_pqp_PQPJNI_PQP_1Collide(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jlong jarg3, jlong jarg4, jobject jarg4_, jlong jarg5, jlong jarg6, jlong jarg7, jobject jarg7_, jint jarg8) {
   jint jresult = 0 ;
   PQP_CollideResult *arg1 = (PQP_CollideResult *) 0 ;
-  PQP_REAL (*arg2)[3] ;
+  PQP_REAL **arg2 ;
   PQP_REAL *arg3 ;
   PQP_Model *arg4 = (PQP_Model *) 0 ;
-  PQP_REAL (*arg5)[3] ;
+  PQP_REAL **arg5 ;
   PQP_REAL *arg6 ;
   PQP_Model *arg7 = (PQP_Model *) 0 ;
   int arg8 ;
@@ -381,47 +382,14 @@ SWIGEXPORT jint JNICALL Java_pqp_PQPJNI_PQP_1Collide_1_1SWIG_10(JNIEnv *jenv, jc
   (void)jarg4_;
   (void)jarg7_;
   arg1 = *(PQP_CollideResult **)&jarg1; 
-  arg2 = *(PQP_REAL (**)[3])&jarg2; 
+  arg2 = *(PQP_REAL ***)&jarg2; 
   arg3 = *(PQP_REAL **)&jarg3; 
   arg4 = *(PQP_Model **)&jarg4; 
-  arg5 = *(PQP_REAL (**)[3])&jarg5; 
+  arg5 = *(PQP_REAL ***)&jarg5; 
   arg6 = *(PQP_REAL **)&jarg6; 
   arg7 = *(PQP_Model **)&jarg7; 
   arg8 = (int)jarg8; 
-  result = (int)PQP_Collide(arg1,(double (*)[3])arg2,arg3,arg4,(double (*)[3])arg5,arg6,arg7,arg8);
-  jresult = (jint)result; 
-  
-  
-  
-  
-  return jresult;
-}
-
-
-SWIGEXPORT jint JNICALL Java_pqp_PQPJNI_PQP_1Collide_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jlong jarg3, jlong jarg4, jobject jarg4_, jlong jarg5, jlong jarg6, jlong jarg7, jobject jarg7_) {
-  jint jresult = 0 ;
-  PQP_CollideResult *arg1 = (PQP_CollideResult *) 0 ;
-  PQP_REAL (*arg2)[3] ;
-  PQP_REAL *arg3 ;
-  PQP_Model *arg4 = (PQP_Model *) 0 ;
-  PQP_REAL (*arg5)[3] ;
-  PQP_REAL *arg6 ;
-  PQP_Model *arg7 = (PQP_Model *) 0 ;
-  int result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  (void)jarg4_;
-  (void)jarg7_;
-  arg1 = *(PQP_CollideResult **)&jarg1; 
-  arg2 = *(PQP_REAL (**)[3])&jarg2; 
-  arg3 = *(PQP_REAL **)&jarg3; 
-  arg4 = *(PQP_Model **)&jarg4; 
-  arg5 = *(PQP_REAL (**)[3])&jarg5; 
-  arg6 = *(PQP_REAL **)&jarg6; 
-  arg7 = *(PQP_Model **)&jarg7; 
-  result = (int)PQP_Collide(arg1,(double (*)[3])arg2,arg3,arg4,(double (*)[3])arg5,arg6,arg7);
+  result = (int)PQP_Collide(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);
   jresult = (jint)result; 
   
   
@@ -3825,6 +3793,97 @@ SWIGEXPORT jdouble JNICALL Java_pqp_PQPJNI_TriDist(JNIEnv *jenv, jclass jcls, jl
   
   
   return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_pqp_PQPJNI_WrapperUtil_1newPoint(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2, jdouble jarg3, jdouble jarg4) {
+  jlong jresult = 0 ;
+  WrapperUtil *arg1 = (WrapperUtil *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  double arg4 ;
+  PQP_REAL *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(WrapperUtil **)&jarg1; 
+  arg2 = (double)jarg2; 
+  arg3 = (double)jarg3; 
+  arg4 = (double)jarg4; 
+  result = (PQP_REAL *)(arg1)->newPoint(arg2,arg3,arg4);
+  *(PQP_REAL **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_pqp_PQPJNI_WrapperUtil_1new3x3Mat(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2, jdouble jarg3, jdouble jarg4, jdouble jarg5, jdouble jarg6, jdouble jarg7, jdouble jarg8, jdouble jarg9, jdouble jarg10) {
+  jlong jresult = 0 ;
+  WrapperUtil *arg1 = (WrapperUtil *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  double arg4 ;
+  double arg5 ;
+  double arg6 ;
+  double arg7 ;
+  double arg8 ;
+  double arg9 ;
+  double arg10 ;
+  PQP_REAL **result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(WrapperUtil **)&jarg1; 
+  arg2 = (double)jarg2; 
+  arg3 = (double)jarg3; 
+  arg4 = (double)jarg4; 
+  arg5 = (double)jarg5; 
+  arg6 = (double)jarg6; 
+  arg7 = (double)jarg7; 
+  arg8 = (double)jarg8; 
+  arg9 = (double)jarg9; 
+  arg10 = (double)jarg10; 
+  result = (PQP_REAL **)(arg1)->new3x3Mat(arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10);
+  *(PQP_REAL ***)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_pqp_PQPJNI_WrapperUtil_1newI3(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  WrapperUtil *arg1 = (WrapperUtil *) 0 ;
+  PQP_REAL **result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(WrapperUtil **)&jarg1; 
+  result = (PQP_REAL **)(arg1)->newI3();
+  *(PQP_REAL ***)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_pqp_PQPJNI_new_1WrapperUtil(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  WrapperUtil *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (WrapperUtil *)new WrapperUtil();
+  *(WrapperUtil **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_pqp_PQPJNI_delete_1WrapperUtil(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  WrapperUtil *arg1 = (WrapperUtil *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(WrapperUtil **)&jarg1; 
+  delete arg1;
 }
 
 

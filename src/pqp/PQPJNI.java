@@ -17,8 +17,7 @@ public class PQPJNI {
   public final static native int PQP_ERR_BUILD_EMPTY_MODEL_get();
   public final static native int PQP_ALL_CONTACTS_get();
   public final static native int PQP_FIRST_CONTACT_get();
-  public final static native int PQP_Collide__SWIG_0(long jarg1, PQP_CollideResult jarg1_, long jarg2, long jarg3, long jarg4, PQP_Model jarg4_, long jarg5, long jarg6, long jarg7, PQP_Model jarg7_, int jarg8);
-  public final static native int PQP_Collide__SWIG_1(long jarg1, PQP_CollideResult jarg1_, long jarg2, long jarg3, long jarg4, PQP_Model jarg4_, long jarg5, long jarg6, long jarg7, PQP_Model jarg7_);
+  public final static native int PQP_Collide(long jarg1, PQP_CollideResult jarg1_, long jarg2, long jarg3, long jarg4, PQP_Model jarg4_, long jarg5, long jarg6, long jarg7, PQP_Model jarg7_, int jarg8);
   public final static native int build_model(long jarg1, PQP_Model jarg1_);
   public final static native void BV_R_set(long jarg1, BV jarg1_, long jarg2);
   public final static native long BV_R_get(long jarg1, BV jarg1_);
@@ -243,6 +242,11 @@ public class PQPJNI {
   public final static native long new_Tri();
   public final static native void delete_Tri(long jarg1);
   public final static native double TriDist(long jarg1, long jarg2, long jarg3, long jarg4);
+  public final static native long WrapperUtil_newPoint(long jarg1, WrapperUtil jarg1_, double jarg2, double jarg3, double jarg4);
+  public final static native long WrapperUtil_new3x3Mat(long jarg1, WrapperUtil jarg1_, double jarg2, double jarg3, double jarg4, double jarg5, double jarg6, double jarg7, double jarg8, double jarg9, double jarg10);
+  public final static native long WrapperUtil_newI3(long jarg1, WrapperUtil jarg1_);
+  public final static native long new_WrapperUtil();
+  public final static native void delete_WrapperUtil(long jarg1);
   public final static native long new_DoubleArray(int jarg1);
   public final static native void delete_DoubleArray(long jarg1);
   public final static native double DoubleArray_getitem(long jarg1, DoubleArray jarg1_, int jarg2);

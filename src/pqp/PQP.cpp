@@ -594,12 +594,26 @@ CollideRecurse(PQP_CollideResult *res,
   }
 }
 
+/*
+ * The input has changed from PQP_REAL R1[3][3] to PQP_REAL* R1[3] to allow easy interface to java.
+ */
 int 
 PQP_Collide(PQP_CollideResult *res,
-            PQP_REAL R1[3][3], PQP_REAL T1[3], PQP_Model *o1,
-            PQP_REAL R2[3][3], PQP_REAL T2[3], PQP_Model *o2,
+            PQP_REAL* R1in[3], PQP_REAL T1[3], PQP_Model *o1,
+            PQP_REAL* R2in[3], PQP_REAL T2[3], PQP_Model *o2,
             int flag)
 {
+
+  // Convert for swig
+  PQP_REAL R1[3][3];
+  for (int i = 0; i < 3; i++)
+    for (int j = 0; j < 3; j++)
+      R1[i][j] = R1in[i][j];
+  PQP_REAL R2[3][3];
+  for (int i = 0; i < 3; i++)
+    for (int j = 0; j < 3; j++)
+      R2[i][j] = R2in[i][j];
+
   double t1 = GetTime();
 
   // make sure that the models are built
@@ -947,11 +961,21 @@ DistanceQueueRecurse(PQP_DistanceResult *res,
 
 int 
 PQP_Distance(PQP_DistanceResult *res,
-             PQP_REAL R1[3][3], PQP_REAL T1[3], PQP_Model *o1,
-             PQP_REAL R2[3][3], PQP_REAL T2[3], PQP_Model *o2,
+             PQP_REAL* R1in[3], PQP_REAL T1[3], PQP_Model *o1,
+             PQP_REAL* R2in[3], PQP_REAL T2[3], PQP_Model *o2,
              PQP_REAL rel_err, PQP_REAL abs_err,
              int qsize)
 {
+  // Convert for swig
+  PQP_REAL R1[3][3];
+  for (int i = 0; i < 3; i++)
+    for (int j = 0; j < 3; j++)
+      R1[i][j] = R1in[i][j];
+  PQP_REAL R2[3][3];
+  for (int i = 0; i < 3; i++)
+    for (int j = 0; j < 3; j++)
+      R2[i][j] = R2in[i][j];
+  
   
   double time1 = GetTime();
   
@@ -1294,11 +1318,20 @@ ToleranceQueueRecurse(PQP_ToleranceResult *res,
 
 int
 PQP_Tolerance(PQP_ToleranceResult *res,
-              PQP_REAL R1[3][3], PQP_REAL T1[3], PQP_Model *o1,
-              PQP_REAL R2[3][3], PQP_REAL T2[3], PQP_Model *o2,
+              PQP_REAL* R1in[3], PQP_REAL T1[3], PQP_Model *o1,
+              PQP_REAL* R2in[3], PQP_REAL T2[3], PQP_Model *o2,
               PQP_REAL tolerance,
               int qsize)
 {
+  // Convert for swig
+  PQP_REAL R1[3][3];
+  for (int i = 0; i < 3; i++)
+    for (int j = 0; j < 3; j++)
+      R1[i][j] = R1in[i][j];
+  PQP_REAL R2[3][3];
+  for (int i = 0; i < 3; i++)
+    for (int j = 0; j < 3; j++)
+      R2[i][j] = R2in[i][j];
   double time1 = GetTime();
 
   // make sure that the models are built
