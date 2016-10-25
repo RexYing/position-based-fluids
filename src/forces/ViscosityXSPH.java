@@ -41,9 +41,8 @@ public class ViscosityXSPH implements Force {
 		}
 		
 		for (int i = 0; i < dvList.size(); i++) {
-			ps.getParticle(i).v.add(dvList.get(i));
+			ps.getParticle(i).changeVelocity(dvList.get(i));
 		}
-		//System.out.println(ps.getParticle(1).v);
 	}
 
 	@Override

@@ -98,8 +98,6 @@ public class Incompressibility implements Force {
 			
 			ps.getParticle(i).changePos(dpi);
 		}
-		
-		ps.applyChanges();
 	}
 
 	private double tensileInstability(Vector3d pij) {

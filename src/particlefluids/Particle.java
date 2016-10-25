@@ -42,9 +42,15 @@ public class Particle
 
     /** Velocity. */
     public final Vector3d v = new Vector3d();
+    
+    /** Change in velocity to be applied */
+    private Vector3d dv = new Vector3d();
 
     /** Force accumulator. */
     Vector3d f = new Vector3d();
+    
+    /** Change in force to be applied */
+    private Vector3d df = new Vector3d();
     
     float[] color = CYAN;
 
@@ -113,13 +119,25 @@ public class Particle
     }
     
     public void changePos(Vector3d dx) {
-    	this.dx = dx;
+    	this.dx.add(dx);
+    }
+    
+    public void changeVelocity(Vector3d dv) {
+      this.dv.add(dv);
+    }
+    
+    public void changeForce(Vector3d df) {
+      this.df.add(df);
     }
     
     public void applyChanges() {
     	x.add(dx);
+    	v.add(dv);
+    	f.add(df);
     	
     	dx = new Vector3d();
+    	dv = new Vector3d();
+    	df = new Vector3d();
     }
     
     

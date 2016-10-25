@@ -2,11 +2,7 @@ package pqp;
 
 import static org.junit.Assert.*;
 
-import javax.media.j3d.J3DBuffer;
-
 import org.junit.Test;
-
-import junit.framework.TestCase;
 
 public class PQPModelTest {
 	static {

@@ -164,44 +164,24 @@ public class ParticleSystem // implements Serializable
 //		System.out.println(t1 - prev);
 		// Clear force accumulators:
 		for (Particle p : P) {
-			
 			clearForceExceptG(p);
 		}
 		// Gather forces
 		for (Force force : F) {
 			force.applyForce();
 		}
-
-		/// TIME-STEP: (Symplectic Euler for now):
-		for (Particle p : P) {
-			p.v.scaleAdd(dt, p.f, p.v); // p.v += dt * p.f;
-			
-			Point3d pPrev = new Point3d(p.x);
-			p.x.scaleAdd(dt, p.v, p.x); // p.x += dt * p.v;
-			
-			meshCollisionDetection(pPrev, p.x, p);
-			cubeDivision.updateParticle(pPrev, p);
-			if (p.x.x < 0) {
-				System.err.println("--   " + pPrev + "  ---->   " + p.x);
-			}
-		}
+		
+		applyChanges(dt);
 		time += dt;
 	}
 
-	private synchronized void meshCollisionDetection(Point3d pPrev, Point3d pCurr, Particle particle) {
+	private synchronized void meshCollisionDetection(Point3d pPrev, Point3d pCurr, Particle particle, double damp) {
 		for (Mesh mesh : meshes) {
 			Collision collision = mesh.segmentIntersects(pPrev, pCurr);
-			boolean b = false;
 			while (collision != null) {
-				if (b) {
-					System.out.println(pPrev + ",   " + particle.x);
-				}
-				b = true;
-				particle.v.scale(particle.v.length() * Constants.WALL_DAMP, collision.reflectedDirection);
+				particle.v.scale(particle.v.length() * damp, collision.reflectedDirection);
 				Vector3d dir = new Vector3d(collision.direction);
-				//particle.x.scaleAdd(Math.max(0, collision.dist - Constants.WALL_MARGIN), dir, pPrev);
-				particle.x.scaleAdd(0, dir, pPrev);
-				System.out.println(particle.x +  ",    " + pPrev);
+				particle.x.scaleAdd(Math.max(0, collision.dist - Constants.WALL_MARGIN), dir, pPrev);
 				collision = mesh.segmentIntersects(pPrev, particle.x);
 			}
 		}
@@ -247,16 +227,19 @@ public class ParticleSystem // implements Serializable
 	/**
 	 * Apply changes to velocity/position of all particles in this particle system. 
 	 */
-	public synchronized void applyChanges() {
+	public synchronized void applyChanges(double dt) {
 		for (Particle p : P) {
 			Point3d prevPos = new Point3d(p.x);
 			p.applyChanges();
-			meshCollisionDetection(prevPos, p.x, p);
-			cubeDivision.updateParticle(prevPos, p);
 			
-			if (p.x.x < 0) {
-				System.err.println(prevPos + "  ---->   " + p.x);
-			}
+			p.v.scaleAdd(dt, p.f, p.v); // p.v += dt * p.f;
+			p.x.scaleAdd(dt, p.v, p.x); // p.x += dt * p.v;
+			
+			meshCollisionDetection(prevPos, p.x, p, Constants.WALL_DAMP);
+			cubeDivision.updateParticle(prevPos, p);
+	      //if (p.x.y < 0) {
+	      //  System.err.println("" + prevPos + "  ---->   " + p.x);
+	      //}
 		}
 	}
 }

@@ -16,6 +16,7 @@ import com.jogamp.opengl.util.*;
 
 import forces.Incompressibility;
 import forces.ViscosityXSPH;
+import forces.VorticityConfinement;
 import pqp.PQP_Model;
 
 /**
@@ -30,15 +31,7 @@ import pqp.PQP_Model;
  * @author Eston Schweickart, February 2014
  */
 public class ParticleSystemBuilder implements GLEventListener {
-	static {
-		/* Need the library (libPQP.so in Linux, PQP.dll in Windows) to be put into java library path.
-		 * In Linux, it is the LD_LIBRARY_PATH; in Windows, it is the PATH variable.
-		 * Check using:
-		 * 
-		 */
-		
-		System.loadLibrary("PQP");
-	}
+	
 	private FrameExporter frameExporter;
 
 	private static int N_STEPS_PER_FRAME = 10;
@@ -46,7 +39,7 @@ public class ParticleSystemBuilder implements GLEventListener {
 	private GLU glu;
 
 	/** Default graphics time step size. */
-	public static final double DT = 0.0083;
+	public static final double DT = 0.0166;
 
 	/** Main window frame. */
 	JFrame frame = null;
@@ -85,6 +78,7 @@ public class ParticleSystemBuilder implements GLEventListener {
 				Constants.ARTIFICIAL_PRESSURE_STRENGTH,
 				Constants.ARTIFICIAL_PRESSURE_RADIUS,
 				Constants.ARTIFICIAL_PRESSURE_POWER));
+		PS.addForce(new VorticityConfinement(PS, Constants.VORTICITY_EPS));
 	}
 
 	/**
