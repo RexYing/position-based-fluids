@@ -21,7 +21,7 @@ public interface Constants
     public static final double KERNEL_RADIUS = 0.1;
     
     //public static final double REST_DENSITY = 6378; // kg m^-2
-    public static final double REST_DENSITY = 108378; 
+    public static final double REST_DENSITY = 68378; 
     /** Constraint Force Mixing */
     public static final double CFM_EPSILON = 5000;
     
@@ -30,5 +30,5 @@ public interface Constants
     public static final double ARTIFICIAL_PRESSURE_RADIUS = 0.03; // meter
     public static final double ARTIFICIAL_PRESSURE_POWER = 4;
     
-    public static final double VORTICITY_EPS = 0.00003;
+    public static final double VORTICITY_EPS = 0.00004;
 }

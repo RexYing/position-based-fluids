@@ -18,7 +18,9 @@ else:
     particleString = ''
 
     for l in scene:
-        loc = [float(x) for x in l.split()]
+        lsplit = l.split()
+        last = lsplit.index('|')
+        loc = [float(x) for x in lsplit[:last]]
 
         particleString += """
     <shape type="sphere">

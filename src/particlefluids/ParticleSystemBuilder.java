@@ -70,6 +70,7 @@ public class ParticleSystemBuilder implements GLEventListener {
 		PS = new ParticleSystem(boundary);
 		// add meshes for the PS
 		PS.addMesh(Mesh.CubeMesh(new Point3d(0, 0, 0), new Point3d(1, 1, 1)));
+		PS.addMesh(Mesh.CubeMesh(new Point3d(0, 0, 0), new Point3d(0.4, 0.4, 0.4)));
 		
 		PS.addForce(new ViscosityXSPH(PS));
 		PS.addForce(new Incompressibility(
@@ -221,6 +222,37 @@ public class ParticleSystemBuilder implements GLEventListener {
 		gl.glVertex3d(0, 1, 0);
 		gl.glVertex3d(0, 1, 1);
 		gl.glEnd();
+		
+		double width = 0.4;
+		gl.glColor3f(1, 0, 0);
+    gl.glBegin(GL2.GL_LINE_LOOP);
+    gl.glVertex3d(0, 0, 0);
+    gl.glVertex3d(width, 0, 0);
+    gl.glVertex3d(width, width, 0);
+    gl.glVertex3d(0, width, 0);
+    gl.glEnd();
+    gl.glBegin(GL2.GL_LINE_LOOP);
+    gl.glVertex3d(0, 0, width);
+    gl.glVertex3d(0.4, 0, width);
+    gl.glVertex3d(width, width, width);
+    gl.glVertex3d(0, width, width);
+    gl.glEnd();
+    gl.glBegin(GL2.GL_LINES);
+    gl.glVertex3d(0, 0, 0);
+    gl.glVertex3d(0, 0, width);
+    gl.glEnd();
+    gl.glBegin(GL2.GL_LINES);
+    gl.glVertex3d(width, 0, 0);
+    gl.glVertex3d(width, 0, width);
+    gl.glEnd();
+    gl.glBegin(GL2.GL_LINES);
+    gl.glVertex3d(width, width, 0);
+    gl.glVertex3d(width, width, width);
+    gl.glEnd();
+    gl.glBegin(GL2.GL_LINES);
+    gl.glVertex3d(0, width, 0);
+    gl.glVertex3d(0, width, width);
+    gl.glEnd();
 
 		/// SIMULATE/DISPLAY HERE (Handled by BuilderGUI):
 		gui.simulateAndDisplayScene(gl);
@@ -586,7 +618,7 @@ public class ParticleSystemBuilder implements GLEventListener {
 
 					output.write("" + PS.P.size() + "\n");
 					for (Particle p : PS.P) {
-						output.write("" + p.x.x + " " + p.x.y + " " + p.x.z + " | " + p.v.x + " " + p.v.y + " " + p.v.z + "\n");
+						output.write("" + p.x.x + " " + p.x.y + " " + p.x.z + "\n");
 					}
 					output.close();
 				}
