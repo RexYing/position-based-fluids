@@ -1,0 +1,72 @@
+PBF homework
+Author: Rex Ying
+
+This is my individual work.
+
+-------------------
+Demo
+
+demo.gif shows the animation of water cube falling in a world space [0, 1] x [0, 1] x [0, 1].
+In addition, another smaller cube is placed at [0, 0.4] x [0, 0.4] x [0, 0.4].
+This is just to show that the code can handle any kind of mesh objects placed in the space, even
+very complicated meshes (see Collision handling section).
+I didn't draw the mesh in Mitsuba so both cubes are invisible...
+But from the way the the water cube drops, you can roughly get where the smaller cube is.
+
+-------------------
+Intro
+
+Run the program with Eclipse (Neon).
+
+In this project, I implemented collision handling, finding particle neighbors, density constraint, 
+surface tension correction and vorticity confinement. In addition, I used Mitsuba to render 
+water cube falling with an invisible box placed in a corner.
+
+-------------------
+Collision handling:
+
+I make use of the Proximity Query Package [1], which provides the C++ code for efficient collision
+detection. Although in the project, I used simple meshes such as cubes, it is possible to do 
+collision detection for large meshes consisting of more than 100k faces, due to the efficient 
+collision detection algorithm of [1] using hierarchical bounding boxes. 
+
+To use it with the starter 
+code provided, I wrote a swig Java interface so that the PQP package can be called in Java.
+*****Note
+I compiled the library libPQP.so in Linux. To run the code, one needs to place the src/pqp/libPQP.so 
+under the java.library.path. (typically /usr/bin)
+For mac OS, one needs to re-compile by running the Makefile in src/pqp.
+
+After collision is detected, velocity (with damping) gets updated to the reflected direction.
+
+--------------------
+Particle neighbors:
+I use the more efficient approach of constructing a hashmap which maps particle to a cube of side 
+len 0.1. This approach makes computing subsequent forces quicker.
+
+This also has the advantage of being able to support large domains, comparing to using a fixed grid
+of cells. See particlefluids.neighbors.CubeSpaceDivision class.
+
+--------------------
+Forces
+
+All 3 required forces are implemented, see:
+forces.Incompressibility
+forces.ViscosityXSPH
+forces.VorticityConfinement
+
+Parameters are in particlefluids.Constants class.
+
+--------------------
+Rendering is done using Mitsuba.
+
+
+--------------------
+References
+
+[1] OBBTree: A Hierarchical Structure for Rapid Interference Detection,
+Stefan Gottschalk, Ming C. Lin, and Dinesh Manocha, Proc. ACM SIGGRAPH, pp. 171-180, Aug. 1996. Also available as tech. rep. TR96-013, Dept. Comput. Sci., Univ. N. Carolina Chapel Hill, 1996.
+
+[2] Liu, G. Gui-Rong, and M. B. Liu. Smoothed particle hydrodynamics: a meshfree particle method. World Scientific, 2003.    
+
+[3] Matthias M?ller, David Charypar, Markus Gross, Particle-based fluid simulation for interactive applications, 2003 ACM SIGGRAPH / Eurographics Symposium on Computer Animation (SCA 2003), August 2003, pp. 154-159.

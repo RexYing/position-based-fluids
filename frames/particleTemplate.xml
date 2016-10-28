@@ -17,7 +17,7 @@
         <!--<string name="extIOR" value="air"/>-->
     <!--</bsdf>-->
 
-    <include filename="$pFile"/>
+    <include filename="export0-00060.xml"/>
 
     <shape type="cube">
         <transform name="toWorld">
